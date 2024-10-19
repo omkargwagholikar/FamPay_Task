@@ -41,9 +41,9 @@ class VideoListView(ListAPIView):
         return queryset
 
 # Render to template
-def video_list_view(request):
-    videos = Video.objects.all()
-    return render(request, 'videos_list.html', {'videos': videos})
+# def video_list_view(request):
+#     videos = Video.objects.all()
+#     return render(request, 'videos_list.html', {'videos': videos})
 
 def test_get_new_videos_periodic(request):
     # result = get_new_videos_periodsic()  

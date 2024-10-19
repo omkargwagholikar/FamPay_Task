@@ -129,26 +129,26 @@ def get_new_videos_querywise(query):
     try:
         key = keys[0]
         print(f"Using key: {key}")
-        # youtube_object = build(
-        #         YOUTUBE_API_SERVICE_NAME,
-        #         YOUTUBE_API_VERSION,
-        #         developerKey=key,
-        # )
+        youtube_object = build(
+                YOUTUBE_API_SERVICE_NAME,
+                YOUTUBE_API_VERSION,
+                developerKey=key,
+        )
 
-        # search_response = (
-        #         youtube_object.search()
-        #         .list(
-        #             q=query,
-        #             type="video",
-        #             part="snippet",
-        #             maxResults=int(os.getenv("max_video_results")),
-        #             order="date",
-        #             publishedAfter= last_update
-        #         )
-        #         .execute()
-        # )
-        # print(search_response)
-        # process_response(search_response)
+        search_response = (
+                youtube_object.search()
+                .list(
+                    q=query,
+                    type="video",
+                    part="snippet",
+                    maxResults=int(os.getenv("max_video_results")),
+                    order="date",
+                    publishedAfter= last_update
+                )
+                .execute()
+        )
+        print(search_response)
+        process_response(search_response)
         print("Data fetch successful")
 
     except HttpError as e:

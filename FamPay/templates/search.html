@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .video-results {
+            margin-top: 20px;
+        }
+        .video-item {
+            display: flex; /* Use flexbox for layout */
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .video-item img {
+            max-width: 120px; /* Set a max width for the image */
+            margin-right: 10px; /* Space between the image and text */
+        }
+        .video-item div {
+            flex-grow: 1; /* Allow text to grow to fill available space */
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .disabled {
+            pointer-events: none;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Videos</h1>
+    <form id="search-form">
+        <input type="text" name="query" placeholder="Enter search query" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    
+    <div id="results"></div>
+    
+    <div class="pagination" id="pagination"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        function fetchResults(url) {
+            $.get(url, function(data) {
+                $('#results').empty(); 
+                $('#pagination').empty();
+
+                if (data.count === 0) {
+                    $('#results').append('<p>No results found.</p>');
+                    return;
+                }
+
+                // Display video results
+                data.results.forEach(video => {
+                    $('#results').append(`
+                        <div class="video-item">
+                            <img src="${video.thumbnail_url}" alt="${video.title}">
+                            <div>
+                                <h3>${video.title}</h3>
+                                <p>${new Date(video.published_at).toLocaleString()}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+
+                // Setup pagination
+                if (data.previous) {
+                    $('#pagination').append(`
+                        <a href="#" data-url="${data.previous}">Previous</a>
+                    `);
+                } else {
+                    $('#pagination').append(`<span class="disabled">Previous</span>`);
+                }
+                
+                if (data.next) {
+                    $('#pagination').append(`
+                        <a href="#" data-url="${data.next}">Next</a>
+                    `);
+                } else {
+                    $('#pagination').append(`<span class="disabled">Next</span>`);
+                }
+                
+                // $('#pagination').append(`
+                //     <span> Page ${data.page} of ${Math.ceil(data.count / data.results.length)}</span>
+                // `);
+
+                // Attach click event to pagination links
+                $('#pagination a').on('click', function(event) {
+                    event.preventDefault(); 
+                    const nextUrl = $(this).data('url');
+                    fetchResults(nextUrl); 
+                });
+            }).fail(function() {
+                $('#results').append('<p>Error retrieving results.</p>');
+            });
+        }
+
+        $('#search-form').on('submit', function(event) {
+            event.preventDefault(); 
+            const query = $('input[name="query"]').val();
+            const url = "{% url 'video-list' %}?query=" + encodeURIComponent(query);
+            fetchResults(url); 
+        });
+    });
+    </script>
+</body>
+</html>
