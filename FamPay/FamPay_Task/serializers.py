@@ -15,4 +15,4 @@ class VideoSerializer(serializers.ModelSerializer):
 class APIKeySerializer(serializers.ModelSerializer):
     class Meta:
         model = APIKey
-        fields = ['id', 'key', 'is_limit_over']
+        fields = ['key']

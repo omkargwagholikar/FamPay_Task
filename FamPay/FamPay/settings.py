@@ -28,17 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-#Celery stuff
-
-# from celery.schedules import crontab
-# CELERY_BEAT_SCHEDULE = {
-#     'call-my-task-every-10-seconds': {
-#         'task': 'FamPay_Task.get_videos.get_new_videos_periodic',
-#         'schedule': 10.0,  # 10 seconds interval calls
-#     },
-# }
-
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_apscheduler',
-    'FamPay_Task.apps.FampayTaskConfig',  # Keep only this one, remove the other FamPay_Task entry
+    'FamPay_Task.apps.FampayTaskConfig',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
