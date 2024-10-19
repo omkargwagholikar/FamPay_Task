@@ -8,6 +8,7 @@ class Item(models.Model):
         return self.name
 
 class Video(models.Model):
+    video_id = models.CharField(max_length=255, default='-')
     title = models.CharField(max_length=255)
     description = models.TextField()
     published_at = models.DateTimeField()
@@ -29,3 +30,13 @@ class APIKey(models.Model):
         verbose_name_plural = 'APIKeys'
     def __str__(self):
         return self.key
+    
+class FetchHistory(models.Model):
+    last_video_id = models.TextField()
+    last_fetch_time = models.DateTimeField()
+    
+    class Meta:
+        ordering = ['-last_fetch_time']
+
+    def __str__(self):
+        return self.last_video_id
