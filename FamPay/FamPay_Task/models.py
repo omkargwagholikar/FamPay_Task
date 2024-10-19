@@ -8,7 +8,7 @@ class Item(models.Model):
         return self.name
 
 class Video(models.Model):
-    video_id = models.CharField(max_length=255, default='-')
+    video_id = models.CharField(max_length=255, default='-', unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     published_at = models.DateTimeField()

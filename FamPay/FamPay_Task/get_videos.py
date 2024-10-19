@@ -81,7 +81,7 @@ def process_response(search_response):
     last_video_id = ""
     for search_result in search_response.get("items", []):
         print(search_result)
-        video_id = search_result["id"]["videoId"],
+        video_id = search_result["id"]["videoId"]
 
         published_at_given = datetime.strptime( search_result["snippet"]["publishedAt"], ISO_DATE_FORMAT)
         time_zone_aware_time = make_aware(published_at_given)
@@ -105,7 +105,6 @@ def process_response(search_response):
             last_video_id = max(video_data["video_id"], last_video_id)
         except Exception as e:
             print(f"An error occurred: {str(e)}")
-        break
 
     update_history = FetchHistory(
         last_video_id = last_video_id,
