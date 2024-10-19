@@ -12,7 +12,7 @@ def initialize():
         scheduler.add_job(
             get_new_videos_periodic,
             trigger="interval",
-            seconds=3,
+            seconds=30,
             id="get_new_videos_job",
             max_instances=1,
             replace_existing=True,

@@ -25,4 +25,4 @@ class VideoListView(ListAPIView):
 
 def call_function_view(request):
     result = get_new_videos()  
-    return HttpResponse("result")
+    return HttpResponse(result)
