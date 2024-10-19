@@ -4,6 +4,7 @@ from datetime import datetime
 import redis
 import requests
 from .models import APIKey, FetchHistory, Video
+from django_apscheduler import util
 
 ISO_DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 YOUTUBE_API_SERVICE_NAME = "youtube"
@@ -16,6 +17,12 @@ def get_last_update_time():
     except FetchHistory.DoesNotExist:  
         date = datetime(2024, 10, 19)      
         return date.strftime(ISO_DATE_FORMAT)
+
+
+# This is the temporary value for the scheduled task
+@util.close_old_connections
+def get_new_videos_periodic():
+    print("get_new_videos_periodic")
 
 def get_new_videos():
     while True:
