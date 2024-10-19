@@ -36,26 +36,26 @@ def get_new_videos_periodic():
     try:
         key = keys[0]
         print(f"Using key: {key}")
-        # youtube_object = build(
-        #         YOUTUBE_API_SERVICE_NAME,
-        #         YOUTUBE_API_VERSION,
-        #         developerKey=key,
-        # )
+        youtube_object = build(
+                YOUTUBE_API_SERVICE_NAME,
+                YOUTUBE_API_VERSION,
+                developerKey=key,
+        )
 
-        # search_response = (
-        #         youtube_object.search()
-        #         .list(
-        #             q=os.getenv("video_search_query"),
-        #             type="video",
-        #             part="snippet",
-        #             maxResults=int(os.getenv("max_video_results")),
-        #             order="date",
-        #             publishedAfter= last_update
-        #         )
-        #         .execute()
-        # )
-        # # print(search_response)
-        # process_response(search_response)
+        search_response = (
+                youtube_object.search()
+                .list(
+                    q=os.getenv("video_search_query"),
+                    type="video",
+                    part="snippet",
+                    maxResults=int(os.getenv("max_video_results")),
+                    order="date",
+                    publishedAfter= last_update
+                )
+                .execute()
+        )
+        # print(search_response)
+        process_response(search_response)
 
         temp = {'kind': 'youtube#searchListResponse', 'etag': '5lw3WTrdfPPbKbmbwA3iJQr3ZpI', 'regionCode': 'ZZ', 'pageInfo': {'totalResults': 1601, 'resultsPerPage': 3}, 'items': [{'kind': 'youtube#searchResult', 'etag': 't-eNITs43S3kAOx_aGYxXAcLozI', 'id': {'kind': 'youtube#video', 'videoId': 'OWkKLUUd3og'}, 'snippet': {'publishedAt': '2024-10-19T15:53:24Z', 'channelId': 'UCWdhBBk9ElDdYAl4RrMHmwg', 'title': 'Mr Beast😅', 'description': '', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/OWkKLUUd3og/default.jpg', 'width': 120, 'height': 90}, 'medium': {'url': 'https://i.ytimg.com/vi/OWkKLUUd3og/mqdefault.jpg', 'width': 320, 'height': 180}, 'high': {'url': 'https://i.ytimg.com/vi/OWkKLUUd3og/hqdefault.jpg', 'width': 480, 'height': 360}}, 'channelTitle': 'AJ ASADUL2003', 'liveBroadcastContent': 'none', 'publishTime': '2024-10-19T15:53:24Z'}}, {'kind': 'youtube#searchResult', 'etag': 'kF_s56N25VQa7uXrYzR7bzcbm0A', 'id': {'kind': 'youtube#video', 'videoId': 'jbKpj3zI4qo'}, 'snippet': {'publishedAt': '2024-10-19T15:52:51Z', 'channelId': 'UCU3WlKoz7w946h9pDp31RsA', 'title': 'Mr Beast Brain Teaser #shorts #brain_teaser #quiz', 'description': '', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/jbKpj3zI4qo/default.jpg', 'width': 120, 'height': 90}, 'medium': {'url': 'https://i.ytimg.com/vi/jbKpj3zI4qo/mqdefault.jpg', 'width': 320, 'height': 180}, 'high': {'url': 'https://i.ytimg.com/vi/jbKpj3zI4qo/hqdefault.jpg', 'width': 480, 'height': 360}}, 'channelTitle': 'quiztrivia85', 'liveBroadcastContent': 'none', 'publishTime': '2024-10-19T15:52:51Z'}}, {'kind': 'youtube#searchResult', 'etag': 'QeaBlqvxEDBUn6_pHf4XB9oQ0kM', 'id': {'kind': 'youtube#video', 'videoId': '0jUfSDYJUWg'}, 'snippet': {'publishedAt': '2024-10-19T15:52:00Z', 'channelId': 'UCqHqK13ulKPh5sLXkN1Cjmw', 'title': 'Will A Basketball Boat Hold My Weight ? | Mr beast #shorts #trending', 'description': 'Will A Basketball Boat Hold My Weight ? | Mr beast #shorts #trending.', 'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/0jUfSDYJUWg/default.jpg', 'width': 120, 'height': 90}, 'medium': {'url': 'https://i.ytimg.com/vi/0jUfSDYJUWg/mqdefault.jpg', 'width': 320, 'height': 180}, 'high': {'url': 'https://i.ytimg.com/vi/0jUfSDYJUWg/hqdefault.jpg', 'width': 480, 'height': 360}}, 'channelTitle': 'RGYadavSkb', 'liveBroadcastContent': 'none', 'publishTime': '2024-10-19T15:52:00Z'}}]}
         process_response(temp)

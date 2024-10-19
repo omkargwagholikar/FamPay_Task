@@ -31,7 +31,7 @@ class VideoListView(ListAPIView):
         query = self.request.query_params.get('query', None)
 
         if query:
-            if query == "" or SearchQuery.objects.filter(query__icontains=query).exists():
+            if query == "" or query == os.getenv("video_search_query"):
                 queryset = queryset.filter(title__icontains=query)
             else:
                 print(f"Searching for a new query: {query}")

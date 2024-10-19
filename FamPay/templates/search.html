@@ -7,7 +7,36 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            padding: 20px; /* You can adjust or remove this to change space around the content */
+            margin: 0; /* Remove default body margin */
+        }
+        h1 {
+            margin: 0; /* Remove default margin from h1 */
+            padding: 0; /* Optional: remove padding if any */
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Align items vertically centered */
+        }
+        h1 svg {
+            height: 2em; /* Set height to match the font size */
+            width: 2em; /* Set width to match the font size */
+            margin-left: 2px; /* Reduce space between text and SVG */
+            margin-right: 5px; /* Add space between SVG and text */
+        }
+        .search-container {
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center the form horizontally */
+            margin-top: 20px; /* Add space above the form */
+        }
+        #search-form input[type="text"] {
+            padding: 10px; /* Increase padding for larger text box */
+            font-size: 1.2em; /* Increase font size */
+            width: 300px; /* Set a specific width for the text box */
+            margin-right: 10px; /* Add space between the text box and button */
+        }
+        #search-form button {
+            padding: 10px 20px; /* Increase padding for larger button */
+            font-size: 1.2em; /* Increase font size */
+            cursor: pointer; /* Change cursor on hover */
         }
         .video-results {
             margin-top: 20px;
@@ -39,11 +68,21 @@
     </style>
 </head>
 <body>
-    <h1>Search Videos</h1>
-    <form id="search-form">
-        <input type="text" name="query" placeholder="Enter search query" value="{{ query }}">
-        <button type="submit">Search</button>
-    </form>
+    <h1>
+        <svg viewBox="0 0 90 20" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 2.24288e-07 14.285 0 14.285 0C14.285 0 5.35042 2.24288e-07 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C2.24288e-07 5.35042 0 10 0 10C0 10 2.24288e-07 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5677 5.35042 27.9727 3.12324Z" fill="#FF0000"></path>
+                <path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z" fill="white"></path>
+            </g>
+        </svg>
+        Website
+    </h1>
+    <div class="search-container">
+        <form id="search-form">
+            <input type="text" name="query" placeholder="Enter search query" value="{{ query }}" >
+            <button type="submit">Search</button>
+        </form>
+    </div>
     
     <div id="results"></div>
     
@@ -62,6 +101,21 @@
                     return;
                 }
 
+                // Function to calculate time delta
+                function timeDelta(publishedAt) {
+                    const now = new Date();
+                    const publishedDate = new Date(publishedAt);
+                    const diffInSeconds = Math.floor((now - publishedDate) / 1000);
+                    
+                    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+                    const diffInMinutes = Math.floor(diffInSeconds / 60);
+                    if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+                    const diffInHours = Math.floor(diffInMinutes / 60);
+                    if (diffInHours < 24) return `${diffInHours} hours ago`;
+                    const diffInDays = Math.floor(diffInHours / 24);
+                    return `${diffInDays} days ago`;
+                }
+
                 // Display video results
                 data.results.forEach(video => {
                     $('#results').append(`
@@ -69,7 +123,7 @@
                             <img src="${video.thumbnail_url}" alt="${video.title}">
                             <div>
                                 <h3>${video.title}</h3>
-                                <p>${new Date(video.published_at).toLocaleString()}</p>
+                                <p>Published: ${timeDelta(video.published_at)}</p>
                             </div>
                         </div>
                     `);
@@ -92,9 +146,6 @@
                     $('#pagination').append(`<span class="disabled">Next</span>`);
                 }
                 
-                // $('#pagination').append(`
-                //     <span> Page ${data.page} of ${Math.ceil(data.count / data.results.length)}</span>
-                // `);
 
                 // Attach click event to pagination links
                 $('#pagination a').on('click', function(event) {
