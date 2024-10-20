@@ -1,5 +1,6 @@
 from django.contrib import admin
-from FamPay_Task.models import Video, APIKey, FetchHistory, SearchQuery
+
+from FamPay_Task.models import APIKey, FetchHistory, SearchQuery, Video
 
 # Register your models here.
 admin.site.register(Video)

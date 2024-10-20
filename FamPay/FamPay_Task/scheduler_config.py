@@ -1,10 +1,13 @@
+import os
+
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore
+from dotenv import load_dotenv
+
 from .get_videos import get_new_videos_periodic
 
-import os
-from dotenv import load_dotenv
 load_dotenv()
+
 
 def initialize():
     try:
@@ -23,6 +26,6 @@ def initialize():
 
         scheduler.start()
         print("Scheduler started successfully!")
-        
+
     except Exception as e:
         print(f"Error starting scheduler: {e}")
