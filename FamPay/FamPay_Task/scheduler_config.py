@@ -2,6 +2,9 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore
 from .get_videos import get_new_videos_periodic
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def initialize():
     try:
@@ -12,7 +15,7 @@ def initialize():
         scheduler.add_job(
             get_new_videos_periodic,
             trigger="interval",
-            seconds=30,
+            seconds=os.getenv("video_update_schedule_seconds"),
             id="get_new_videos_job",
             max_instances=1,
             replace_existing=True,

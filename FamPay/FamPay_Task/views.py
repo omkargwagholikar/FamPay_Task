@@ -23,7 +23,6 @@ class VideoPagination(PageNumberPagination):
     page_size = 3
 
 class VideoListView(ListAPIView):
-    # queryset = Video.objects.all()
     serializer_class = VideoSerializer
     pagination_class = VideoPagination
     def get_queryset(self):
@@ -39,11 +38,6 @@ class VideoListView(ListAPIView):
                 queryset = queryset.filter(title__icontains=query)
 
         return queryset
-
-# Render to template
-# def video_list_view(request):
-#     videos = Video.objects.all()
-#     return render(request, 'videos_list.html', {'videos': videos})
 
 def test_get_new_videos_periodic(request):
     # result = get_new_videos_periodsic()  

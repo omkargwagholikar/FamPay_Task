@@ -11,6 +11,5 @@ router.register(r'api_key', APIKeyViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('videos/', VideoListView.as_view(), name='video-list'),
-    path('test/', test_get_new_videos_periodic, name='call_function'),
-    # path('videos/', video_list_view, name='video-list')
+    path('test/', test_get_new_videos_periodic, name='call_function')
 ]

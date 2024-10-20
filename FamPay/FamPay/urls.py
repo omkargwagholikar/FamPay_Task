@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import schema_view, search_view
+from .views import schema_view, search_view, health_check
 
 urlpatterns = [
     path('', search_view, name='video-search'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     path('admin/', admin.site.urls),
-    path('api/', include('FamPay_Task.urls'))
+    path('api/', include('FamPay_Task.urls')),
+    path('ping/', health_check, name='health_check')
 ]

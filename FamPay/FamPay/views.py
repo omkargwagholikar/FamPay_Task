@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from django.shortcuts import render
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -25,3 +26,6 @@ def search_view(request):
         'page_obj': None,
     }
     return render(request, 'search.html', context)
+
+def health_check(request):     
+    return HTTPResponse({"message": "Pong!"})
